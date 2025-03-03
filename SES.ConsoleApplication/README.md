@@ -38,6 +38,19 @@ public static class StaticExample
 
 The option classes must end with the word "Option"
 
+## Filters
+
+Filters can be attached globally, to specific classes, or specific methods using `UseFilter<T>` or `[ConsoleAppFilter<T>]`.
+
+You can override the exit code using filters.
+You can share information between commands and filters, and between multiple different filters.
+
+See: https://github.com/Cysharp/ConsoleAppFramework?tab=readme-ov-file#filtermiddleware-pipeline--consoleappcontext
+
+## Validation
+
+ConsoleAppFramework supports attribute based parameter validation.
+
 # References
 
 - Really good information on logging here (with configuration): https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line

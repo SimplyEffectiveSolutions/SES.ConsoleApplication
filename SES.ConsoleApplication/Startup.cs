@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SES.ConsoleApplication.Options;
 using ZLogger;
 using ZLogger.Formatters;
 
@@ -12,7 +13,7 @@ public static class Startup
 {
     // Check to see if the --config parameter has been set
     // Typically used to determine whether to include a JSON configuration provider
-    internal static string SetConfigPath(string[] strings)
+    private static string SetConfigPath(string[] strings)
     {
         var configIndex = -1;
         var idx = 0;
@@ -45,9 +46,10 @@ public static class Startup
         
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
+        argsMapping.Add("-k", "Key");
         // TODO: add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
         
-        var builder = Host.CreateApplicationBuilder(args);
+        var builder = Host.CreateApplicationBuilder(args); // Set's the current root path by default
         var env = builder.Environment;
 
         builder.Configuration.Sources.Clear();
@@ -61,9 +63,9 @@ public static class Startup
         }
         
         builder.Configuration.AddCommandLine(args, argsMapping); // TODO: Update mappings if required
-
+        
         // NOTE: Shows the configuration overrides. This is completely managed by IHost
-        // var configDebugView = builder.Configuration.GetDebugView();
+        //var configDebugView = builder.Configuration.GetDebugView();
 
         builder.Logging.ClearProviders()
             .AddZLoggerConsole((options, services) =>
@@ -83,8 +85,11 @@ public static class Startup
                 options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
             });
 
+        //-------------------
+        // TODO: Add options
+        builder.Services.Configure<PositionOptions>(builder.Configuration.GetSection("Position"));
+        
         var app = builder.ToConsoleAppBuilder();
-
         return app;
     }
 
@@ -119,8 +124,9 @@ public static class Startup
             {
                 services.Clear();
                 
+                //-----------------------
                 // TODO: Add options here
-                //services.Configure<PositionOptions>(configuration.GetSection("Position"));
+                services.Configure<PositionOptions>(configuration.GetSection("Position"));
                 
                 services.AddSingleton<IConfiguration>(configuration);
             })
