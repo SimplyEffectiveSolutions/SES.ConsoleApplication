@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Simply Effective Solutions Pty Ltd",
+  "classifications": ["Console", "ConsoleApp", "CommandLine"],
+  "identity": "SES.ConsoleApplication",
+  "name": "SES Console Application",
+  "shortName": "sesconsole",
+  "description": "A template for creating a .NET console application using ConsoleAppFramework with built in DI, logging, configuration and filters.",
+  "sourceName": "SES.ConsoleApplication",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "preferNameDirectory": true,
+  "symbols": {
+    "UseHosted": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "description": "Use hosted (true) or non-hosted (false) application mode"
+    }
+  }
+}

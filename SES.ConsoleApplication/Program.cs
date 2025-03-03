@@ -10,8 +10,11 @@ using SES.ConsoleApplication.Filters;
 
 //----------------- ------
 
+#if (UseHosted)
 var app = Startup.CreateHostedConsoleAppBuilder(args);
-//var app = Startup.CreateNonHostedConsoleAppBuilder(args);
+#else
+var app = Startup.CreateNonHostedConsoleAppBuilder(args);
+#endif
 
 //-----------------------
 // TODO: Add filters here
