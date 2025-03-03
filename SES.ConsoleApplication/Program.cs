@@ -16,7 +16,7 @@ var app = Startup.CreateHostedConsoleAppBuilder(args);
 //-----------------------
 // TODO: Add filters here
 app.UseFilter<ReplaceLogFilter>();
-//app.UseFilter<TimerFilter>();
+app.UseFilter<TimerFilter>();
 
 //-----------------------
 // TODO: Add commands here

@@ -13,6 +13,7 @@ To see the help message outputed by the command line, run: `dotnet run --project
 ## Logging
 
 You can use `ConsoleApp.Log()` and `ConsoleApp.LogError()` in static classes and methods.
+(The context for ConsoleApp.Log... is "Program", which matters if you want to control the log level from appsettings.json)
 Or call the service provider `ConsoleApp.ServiceProvider`:
 
 ```c#
