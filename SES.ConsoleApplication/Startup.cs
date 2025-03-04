@@ -47,13 +47,12 @@ public static class Startup
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
         argsMapping.Add("-k", "Key");
-        // TODO: add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
+        // TODO: For new projects: Add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
         
         var builder = Host.CreateApplicationBuilder(args); // Set's the current root path by default
         var env = builder.Environment;
 
         builder.Configuration.Sources.Clear();
-        // TODO: add the default directory
         builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
         builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
         
