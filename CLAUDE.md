@@ -5,6 +5,9 @@
 # Build the project
 dotnet build
 
+# Publish the application to a single executable
+dotnet publish -c Release -r win-x64 --self-contained
+
 # Run the application
 dotnet run --project SES.ConsoleApplication
 
@@ -16,6 +19,9 @@ dotnet run --environment Production
 
 # Run with specific config file
 dotnet run --project SES.ConsoleApplication -- echo -m "message" --config path/to/config.json
+
+# Run integration tests
+dotnet test
 ```
 
 ## Code Style Guidelines
