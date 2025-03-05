@@ -46,7 +46,7 @@
         "redirectStandardError": false
       },
       "manualInstructions": [{
-        "text": "Run 'setup.cmd' to initialize git"
+        "text": "Run 'setup.cmd' to initialize git and create some default empty folders"
       }],
       "continueOnError": false,
       "description ": "setups the project by calling setup.cmd"

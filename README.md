@@ -14,17 +14,13 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 In the directory that contains the .template.config folder, run:
 
-`dotnet new install .`
-
-Check the installation was successful:
-
-`dotnet new --list
+`dotnet new install .` or `dotnet new install . --force` (If the template already exists)
 
 To use the installed template, you can then run:
 
-`dotnet new sesconsole`
+`dotnet new sesconsole` in a new folder. The name of the folder will dictate the project name. Or use `dotnet new sesconsole -n <project name>` to specify the project name
 
-Or pick the `sesconsole` template from Rider
+Alternately, you can also pick the `sesconsole` template from Rider
 
 ## Logging
 
@@ -74,12 +70,13 @@ ConsoleAppFramework supports attribute based parameter validation.
 
 # TODO
 
-- [ ] Change the folder structure
+- [ ] Add loglevels to test
+- [x] Change the folder structure
 - [ ] Add:
   - gitignore (Review the content of the file)
   - gitattributes (Review the content of the file)
   - gitconfig
   - .editorconfig
   - license.txt
-  - README.md
-  - CLAUDE.md
+  - [x] README.md
+  - [x] CLAUDE.md
