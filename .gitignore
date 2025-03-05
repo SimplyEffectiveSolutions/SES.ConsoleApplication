@@ -23,6 +23,7 @@ TestResult.xml
 [Tt]emp/
 [Oo]bj
 [Ll]ib/*
+[Ll]ogs/
 ![Ll]ib/repositories.config
 *.ide/
 *_i.c

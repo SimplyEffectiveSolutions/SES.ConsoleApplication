@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SES.ConsoleApplication.Options;
+using System.IO;
+using System.Reflection;
 using ZLogger;
 using ZLogger.Formatters;
 
@@ -37,6 +39,66 @@ public static class Startup
         }
 
         return s;
+    }
+
+    // Gets the log file path based on configuration or defaults to solution directory
+    private static string GetLogFilePath(IConfiguration configuration)
+    {
+        // Get logs folder from configuration or use default "logs"
+        var logsFolder = configuration.GetValue<string>("Logging:LogsFolder") ?? "logs";
+        
+        // Convert relative path to absolute path if needed
+        if (!Path.IsPathRooted(logsFolder))
+        {
+            // Get the directory where the executable is running from
+            string exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? Directory.GetCurrentDirectory();
+            logsFolder = Path.GetFullPath(Path.Combine(exeDirectory, logsFolder));
+        }
+        
+        // Ensure the directory exists
+        Directory.CreateDirectory(logsFolder);
+        
+        // Get log retention period in days (default to 7 days if not specified)
+        var retentionDays = configuration.GetValue<int>("Logging:LogRetentionDays", 7);
+        
+        // Clean up old log files based on retention policy
+        CleanupOldLogFiles(logsFolder, retentionDays);
+        
+        // Create a timestamped filename in yyyyMMdd-HHmm format
+        var timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        
+        // Return the full path to the log file with timestamp
+        return Path.Combine(logsFolder, $"log_{timestamp}.txt");
+    }
+    
+    // Deletes log files based on retention policy
+    private static void CleanupOldLogFiles(string logsFolder, int retentionDays)
+    {
+        try
+        {
+            var now = DateTime.Now;
+            var cutoffDate = now.AddDays(-retentionDays);
+            
+            foreach (var file in Directory.GetFiles(logsFolder, "log_*.txt"))
+            {
+                var fileInfo = new FileInfo(file);
+                if (fileInfo.LastWriteTime < cutoffDate)
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception)
+                    {
+                        // Silently continue if we can't delete a file
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // Ensure cleanup doesn't prevent application startup if there's an issue
+        }
     }
 
     internal static ConsoleApp.ConsoleAppBuilder CreateHostedConsoleAppBuilder(string[] args)
@@ -75,8 +137,7 @@ public static class Startup
                     options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
                 }
             )
-            // TODO: Add a new log for each day and delete old logs
-            .AddZLoggerFile("log.txt", (options, services) =>
+            .AddZLoggerFile(GetLogFilePath(builder.Configuration), (options, services) =>
             {
                 var config = services.GetRequiredService<IConfiguration>();
         
@@ -138,11 +199,9 @@ public static class Startup
                     options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerConsole:IncludeScopes");
                     options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
                 })
-                // TODO: Add a new log for each day and delete old logs
-                .AddZLoggerFile("log.txt", (options, services) =>
+                .AddZLoggerFile(GetLogFilePath(config), (options, services) =>
                 {
                     options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
-                    //options.TimeProvider = TimeProvider.System;
                     options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
                 });
             });
