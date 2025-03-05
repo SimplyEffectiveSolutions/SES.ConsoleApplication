@@ -10,6 +10,22 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 # Notes
 
+## Install
+
+In the directory that contains the .template.config folder, run:
+
+`dotnet new install .`
+
+Check the installation was successful:
+
+`dotnet new --list
+
+To use the installed template, you can then run:
+
+`dotnet new sesconsole`
+
+Or pick the `sesconsole` template from Rider
+
 ## Logging
 
 You can use `ConsoleApp.Log()` and `ConsoleApp.LogError()` in static classes and methods.
@@ -55,3 +71,13 @@ ConsoleAppFramework supports attribute based parameter validation.
 # References
 
 - Really good information on logging here (with configuration): https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line
+
+# TODO
+
+- [ ] Change the folder structure
+- [ ] Add:
+  - gitignore
+  - gitattributes
+  - gitconfig
+  - README.md
+  - CLAUDE.md
