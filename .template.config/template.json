@@ -17,14 +17,22 @@
       "exclude": [
         ".git/**",
         ".idea/**",
-        ".template.config/**",
-        "test2.sln.DotSettings.user",
+        "**/[Bb]in/**",
+        "**/[Oo]bj/**",
+        "**/.template.config/**",
+        "**/*.filelist",
+        "**/*.user",
+        "**/*.lock.json",
+        "**/*.json",
+        "src/SES.ConsoleApplication.IntegrationTests/**",
+        "SES.ConsoleApplication.sln.DotSettings.user",
         "CLAUDE.md",
         "README.md"
       ],
       "rename": {
         "CLAUDE.template.md": "CLAUDE.md",
-        "README.template.md": "README.md"
+        "README.template.md": "README.md",
+        "appsettings.tmp": "appsettings.json"
       }
     }
   ],

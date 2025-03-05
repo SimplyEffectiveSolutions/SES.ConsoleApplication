@@ -7,7 +7,7 @@ using SES.ConsoleApplication.Filters;
 // TODO: Performance profile the speed of calling a command line with IHost and one without IHost
 // TODO: Write tests to make sure configurations are working properly (especially log levels)
 
-//----------------- ------
+//-----------------------
 
 #if (UseHosted)
 var app = Startup.CreateHostedConsoleAppBuilder(args);
