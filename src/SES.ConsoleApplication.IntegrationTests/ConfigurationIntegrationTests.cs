@@ -10,11 +10,11 @@ namespace SES.ConsoleApplication.IntegrationTests;
 public class ConfigurationIntegrationTests : IDisposable
 {
     private static readonly string _testCasesDirectory =
-        @"E:\Source\SES.ConsoleApplication\SES.ConsoleApplication.IntegrationTests\TestCases";
+        @"E:\Source\SES.ConsoleApplication\src\SES.ConsoleApplication.IntegrationTests\TestCases";
 
     private static string _publishedExePath;
     
-    private static string _applicationProjectDir = @"E:\Source\SES.ConsoleApplication\SES.ConsoleApplication";
+    private static string _applicationProjectDir = @"E:\Source\SES.ConsoleApplication\src\SES.ConsoleApplication";
     
     // Single shared test directory for all tests
     private static string _testDirectory;

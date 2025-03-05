@@ -76,8 +76,10 @@ ConsoleAppFramework supports attribute based parameter validation.
 
 - [ ] Change the folder structure
 - [ ] Add:
-  - gitignore
-  - gitattributes
+  - gitignore (Review the content of the file)
+  - gitattributes (Review the content of the file)
   - gitconfig
+  - .editorconfig
+  - license.txt
   - README.md
   - CLAUDE.md

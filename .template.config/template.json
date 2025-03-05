@@ -12,6 +12,22 @@
     "type": "project"
   },
   "preferNameDirectory": true,
+  "sources": [
+    {
+      "exclude": [
+        ".git/**",
+        ".idea/**",
+        ".template.config/**",
+        "test2.sln.DotSettings.user",
+        "CLAUDE.md",
+        "README.md"
+      ],
+      "rename": {
+        "CLAUDE.template.md": "CLAUDE.md",
+        "README.template.md": "README.md"
+      }
+    }
+  ],
   "symbols": {
     "UseHosted": {
       "type": "parameter",
@@ -19,5 +35,21 @@
       "defaultValue": "true",
       "description": "Use hosted (true) or non-hosted (false) application mode"
     }
-  }
+  },
+  "postActions": [
+    {
+      "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
+      "args": {
+        "executable": "setup.cmd",
+        "args": "",
+        "redirectStandardOutput": false,
+        "redirectStandardError": false
+      },
+      "manualInstructions": [{
+        "text": "Run 'setup.cmd' to initialize git"
+      }],
+      "continueOnError": false,
+      "description ": "setups the project by calling setup.cmd"
+    }
+  ]
 }
