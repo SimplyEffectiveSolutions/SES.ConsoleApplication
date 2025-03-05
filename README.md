@@ -47,6 +47,8 @@ public static class StaticExample
 }
 ```
 
+NOTE: All logs are written to the `logs` folder.
+
 ## Options
 
 The option classes must end with the word "Option"
@@ -71,6 +73,10 @@ ConsoleAppFramework supports attribute based parameter validation.
 # TODO
 
 - [ ] Add loglevels to test
+- [ ] Remove test project from solution file when building project
+- [ ] Write logs into a log folder in the main project folder
+- [ ] Create a log file for each run
+- [ ] Delete logs that are more than a day old
 - [x] Change the folder structure
 - [ ] Add:
   - gitignore (Review the content of the file)
