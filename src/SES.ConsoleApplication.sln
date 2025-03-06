@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication", "src\SES.ConsoleApplication\SES.ConsoleApplication.csproj", "{6AA2053C-C1F2-402C-A416-5F3EC4C26FFD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication", "SES.ConsoleApplication\SES.ConsoleApplication.csproj", "{6AA2053C-C1F2-402C-A416-5F3EC4C26FFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication.IntegrationTests", "src\SES.ConsoleApplication.IntegrationTests\SES.ConsoleApplication.IntegrationTests.csproj", "{4A20057F-E232-4099-870F-0F99E9D9E3BB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication.IntegrationTests", "SES.ConsoleApplication.IntegrationTests\SES.ConsoleApplication.IntegrationTests.csproj", "{4A20057F-E232-4099-870F-0F99E9D9E3BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

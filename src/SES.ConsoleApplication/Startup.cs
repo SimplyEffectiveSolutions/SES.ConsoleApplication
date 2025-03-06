@@ -4,8 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SES.ConsoleApplication.Options;
-using System.IO;
-using System.Reflection;
 using ZLogger;
 using ZLogger.Formatters;
 
@@ -51,7 +49,7 @@ public static class Startup
         if (!Path.IsPathRooted(logsFolder))
         {
             // Get the directory where the executable is running from
-            string exeDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? Directory.GetCurrentDirectory();
+            string exeDirectory = Directory.GetCurrentDirectory();
             logsFolder = Path.GetFullPath(Path.Combine(exeDirectory, logsFolder));
         }
         
