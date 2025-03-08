@@ -28,7 +28,7 @@ dotnet test
 - Commands: Place in Commands/ folder, use constructor injection, must implement command methods
 - Options: Place in Options/ folder, must end with "Options" suffix
 - Filters: Place in Filters/ folder, implement middleware pattern via UseFilter<T>
-- Logging: Use ZLogger for structured logging (ZLog* methods or ConsoleApp.Log)
+- Logging: Use ZLogger for structured logging (ZLog* methods)
 - Configuration: Follow standard .NET patterns with environment-specific appsettings files
 - Nullability: Default is disabled (Nullable=disable)
 - Error handling: Use logging for errors, throw exceptions for unrecoverable errors

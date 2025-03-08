@@ -1,0 +1,1 @@
+dotnet publish "E:\Source\SES.ConsoleApplication\src\SES.ConsoleApplication" /p:PublishSingleFile=true /p:SelfContained=true /p:IncludeAllContentForSelfExtract=false /p:DebugSymbols=false -r win-x64 -c Release -o "E:\Source\SES.ConsoleApplication\publish" -f net9.0

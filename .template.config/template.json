@@ -29,7 +29,8 @@
         "SES.ConsoleApplication.sln",
         "SES.ConsoleApplication.sln.DotSettings.user",
         "CLAUDE.md",
-        "README.md"
+        "README.md",
+		"create_template.cmd"
       ],
       "rename": {
         "CLAUDE.template.md": "CLAUDE.md",

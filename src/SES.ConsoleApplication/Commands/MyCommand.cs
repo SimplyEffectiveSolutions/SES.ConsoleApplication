@@ -28,7 +28,7 @@ public class MyCommand(IConfiguration configuration, IOptions<PositionOptions> o
         }
 
         logger.BeginScope("Scope2");
-        ConsoleApp.Log($"Message: {msg}. Title: {options.Value.Title}, Name: {options.Value.Name}, Key: {key}");
-        ConsoleApp.Log($"Using ConsoleApp.Log() to log this message.");
+        logger.ZLogInformation($"Message: {msg}. Title: {options.Value.Title}, Name: {options.Value.Name}, Key: {key}");
+        logger.ZLogInformation($"Using ConsoleApp.Log() to log this message.");
     }
 }

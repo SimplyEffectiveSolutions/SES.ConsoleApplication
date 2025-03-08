@@ -12,7 +12,7 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 ## Running command
 
-When running a command with a `bool? param = null` (i.e. a nullable value), only the parameter key is needed. i.e. `command-name --param` or `command-name -p`. 
+When running a command with a `bool? param = null` (i.e. a nullable value), only the parameter key is needed. i.e. `command-name --param` or `command-name -p`. (Using `command-name -p true` will cause the command to fail).
 
 ## Install
 
@@ -28,7 +28,8 @@ Alternately, you can also pick the `sesconsole` template from Rider
 
 ## Logging
 
-You can use `ConsoleApp.Log()` and `ConsoleApp.LogError()` in static classes and methods.
+NOTE: (2025-03-09) neuecc recommends not using `ConsoleApp.Log()` and `ConsoleApp.LogError()` in typical applications.
+
 (The context for ConsoleApp.Log... is "Program", which matters if you want to control the log level from appsettings.json)
 Or call the service provider `ConsoleApp.ServiceProvider`:
 
@@ -69,6 +70,12 @@ See: https://github.com/Cysharp/ConsoleAppFramework?tab=readme-ov-file#filtermid
 ## Validation
 
 ConsoleAppFramework supports attribute based parameter validation.
+
+## Publishing
+
+Run the `publish.cmd` command.
+
+If you want to change the exe name, update the `publish.cmd` file with: `-p:AssemblyName=YourDesiredExeName` e.g. `dotnet publish -c Release -p:AssemblyName=YourDesiredExeName`
 
 # References
 
