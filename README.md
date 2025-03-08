@@ -10,6 +10,10 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 # Notes
 
+## Running command
+
+When running a command with a `bool? param = null` (i.e. a nullable value), only the parameter key is needed. i.e. `command-name --param` or `command-name -p`. 
+
 ## Install
 
 In the directory that contains the .template.config folder, run:
@@ -69,20 +73,9 @@ ConsoleAppFramework supports attribute based parameter validation.
 # References
 
 - Really good information on logging here (with configuration): https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line
+- .gitignores: https://github.com/github/gitignore
+- .editorconfig: https://editorconfig.org/
 
 # TODO
 
 - [ ] Add loglevels to test
-- [x] Remove test project from solution file when building project
-- [x] Write logs into a log folder in the main project folder
-- [x] Create a log file for each run
-- [x] Delete logs that are more than a day old
-- [x] Change the folder structure
-- [ ] Add:
-  - gitignore (Review the content of the file)
-  - gitattributes (Review the content of the file. Ask Claude to help us format this properly)
-  - gitconfig
-  - .editorconfig
-  - license.txt
-  - [x] README.md
-  - [x] CLAUDE.md

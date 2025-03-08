@@ -205,20 +205,6 @@ public class ConfigurationIntegrationTests : IDisposable
         return output.ToString();
     }
     
-    private string ExtractRelevantOutput(string fullOutput)
-    {
-        // Extract the message line containing our expected output
-        // This regex looks for a line containing "Message: " followed by our test message
-        var match = Regex.Match(fullOutput, @"Message: TestMessage.*");
-        if (match.Success)
-        {
-            return match.Value.Trim();
-        }
-        
-        // If not found, return the full output
-        return fullOutput.Trim();
-    }
-    
     public void Dispose()
     {
         // For test debugging, we'll keep the test directory
