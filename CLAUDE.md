@@ -39,6 +39,9 @@ dotnet test
 - Filters/ - Cross-cutting middleware pipeline components
 - Options/ - Configuration option classes
 
+## Instructions
+- Add an integration test for every new feature
+
 ## Conversation Summary
 
 We've created a robust .NET Console Application project template with configuration testing capabilities:
