@@ -1,20 +1,41 @@
-# Test Data Structure
+# Integration Test Structure
 
-This directory contains all the test data used by the integration tests. The structure is designed to provide a clear organisation pattern that scales well as more commands, fixtures, and tests are added.
+This directory contains the data and expected outputs for all integration tests in the project.
 
-## Migration from Legacy Structure
+## Overview
 
-This new structure replaces the legacy TestCases folder structure. The old structure had:
-- A folder for each test case (Case1, Case2, etc.)
-- Input and expected output files in each folder
+The integration tests are structured in three main components:
 
-The new structure organizes test data hierarchically by command, fixture, and scenario:
-- Commands are now grouped together (Echo, Add, etc.)
-- Fixtures provide reusable test environments
-- Scenarios represent different test conditions (When...)
-- Test names describe the expected behavior (Should...)
+1. **Fixtures**: Reusable test environments that serve as starting points for tests
+2. **Test Classes**: Classes that inherit from BaseCommandTest to run commands and verify results
+3. **Test Data**: Organized folders for fixtures, inputs, and expected outputs
 
-## Folder Structure
+## Key Classes
+
+- **BaseCommandTest**: Base class for all command integration tests that provides helper methods
+- **BasicFixture**: Fixture that sets up a basic test environment for Echo command tests
+
+## Integration Test Project Structure
+
+```
+- Commands/                   # Command test classes
+  - Base/                     # Base classes for tests
+    - BaseCommandTest.cs      # Core test base class
+  - README.md                 # Usage guide
+- Fixtures/                   # Fixture classes for test setup
+  - BasicFixture.cs           # Basic test fixture
+- TestCollections.cs          # xUnit test collections
+- TestConfiguration.cs        # Test configuration loader
+- TestConfig.json             # Test configuration file
+- TestData/                   # Test data folder
+  - Commands/                 # Command-specific inputs
+  - ExpectedLogs/             # Expected log outputs
+  - ExpectedResults/          # Expected file system state after tests
+  - Fixtures/                 # Shared test fixtures
+  - README.md                 # Detailed data structure guide
+```
+
+## TestData Folder Structure
 
 The test data is organised in a hierarchical structure following the pattern:
 
@@ -62,6 +83,19 @@ A special folder named `_EXE` can be included in any test data directory. The co
 - Override files that should be loaded from the executable directory
 - Any files that the application expects to find in its own directory
 
+## Working with This Structure
+
+When adding a new test:
+
+1. Create a folder for your test inputs in `Commands/[CommandName]/[FixtureName]/[ScenarioName]/[TestName]/`
+2. Add your test method following the naming convention: `[Command]_[Fixture]_[ScenarioName]_[TestName]`
+3. The first time your test runs, it will create expected logs and results files
+4. Verify the expected output manually to ensure it's correct
+
+For tests without a specific fixture, use `NoFixture` as the fixture name.
+
+Note: The [ScenarioName] should typically start with "When" to describe the condition being tested, such as "WhenWriteEnabled" or "WhenReadOnly".
+
 ## Test Naming Convention
 
 Test methods in code should follow this naming convention:
@@ -76,83 +110,23 @@ For tests that don't require a specific fixture, use:
 [Command]_NoFixture_[ScenarioName]_[TestName]
 ```
 
-## Examples
+## Running Tests
 
-### Directory Structure Example
-
-NOTE: Fixtures and Commands folders don't have scenario names. (These folders typically keep the input data for a test. The scenario and test name will often modify this data, and that is what we want to check in the ExpectedLogs and ExpectedResults folders.
-
+Tests can be run with:
+```bash
+dotnet test src/SES.ConsoleApplication.IntegrationTests
 ```
-TestData/
-├── Fixtures/
-│   ├── BasicDiagram/                   # Basic diagram fixture
-│   │   ├── DIAG001/
-│   │   │   ├── COMP001/
-│   │   │   │   └── Description.md
-│   │   │   └── COMP002/
-│   │   │       └── Description.md
-│   │   └── diagram1.dgr
-│   └── ComplexDiagram/                 # More complex diagram fixture
-│
-├── Commands/
-│   ├── AddFrontmatter/
-│   │   ├── BasicDiagram/
-│   │   │   │   └── ShouldAddToEmpty/
-│   │   │   │       └── DIAG001/
-│   │   │   │           └── COMP003/
-│   │   │   │               └── Description.md
-│   │   │       └── ShouldSkipExisting/
-│   │   └── ComplexDiagram/
-│   │           └── ShouldAddToNestedComponents/
-│   └── DeleteOrphanedFolders/
-│       └── NoFixture/                  # Test without a specific fixture
-│               └── ShouldDeleteEmptyFolders/
-│                   └── parent/
-│                       ├── empty/
-│                       └── not_empty/
-│                           └── file.txt
-│
-├── ExpectedLogs/
-│   ├── AddFrontmatter/
-│   │   ├── BasicDiagram/
-│   │   │   ├── WhenWriteEnabled/        # Scenario name
-│   │   │   │   └── ShouldAddToEmpty.verified.log
-│   │   │   └── WhenReadOnly/            # Scenario name
-│   │   │       └── ShouldSkipExisting.verified.log
-│   │   └── ComplexDiagram/
-│   │       └── WhenWriteEnabled/        # Scenario name
-│   │           └── ShouldAddToNestedComponents.verified.log
-│   └── DeleteOrphanedFolders/
-│       └── NoFixture/
-│           └── WhenWriteEnabled/        # Scenario name
-│               └── ShouldDeleteEmptyFolders.verified.log
-│
-└── ExpectedResults/
-    ├── AddFrontmatter/
-    │   ├── BasicDiagram/
-    │   │   ├── WhenWriteEnabled/        # Scenario name
-    │   │   │   └── ShouldAddToEmpty/
-    │   │   │       └── DIAG001/
-    │   │   │           └── COMP003/
-    │   │   │               └── Description.verified.md
-    │   │   └── WhenReadOnly/            # Scenario name
-    │   │       └── ShouldSkipExisting/
-    │   │           └── DIAG001/
-    │   │               ├── COMP001/
-    │   │               │   └── Description.verified.md
-    │   │               └── COMP002/
-    │   │                   └── Description.verified.md
-    │   └── ComplexDiagram/
-    │       └── WhenWriteEnabled/        # Scenario name
-    │           └── ShouldAddToNestedComponents/
-    └── DeleteOrphanedFolders/
-        └── NoFixture/
-            └── WhenWriteEnabled/        # Scenario name
-                └── ShouldDeleteEmptyFolders/
-                    └── parent/
-                        └── not_empty/
-                            └── file.txt
-```
+
+## Adding New Tests
+
+When adding a new test:
+
+1. Create input data in `TestData/Commands/[CommandName]/[FixtureName]/[TestName]/`
+2. Create a test method in an appropriate test class (or create a new class)
+3. Run the test to generate verification files
+4. Manually verify the output is correct
+
+See the README.md in each folder for more detailed instructions.
 
 ### Test Method Name Examples
 
@@ -162,16 +136,3 @@ public void AddFrontmatter_BasicDiagram_WhenReadOnly_ShouldSkipExisting()
 public void AddFrontmatter_ComplexDiagram_WhenWriteEnabled_ShouldAddToNestedComponents()
 public void DeleteOrphanedFolders_NoFixture_WhenWriteEnabled_ShouldDeleteEmptyFolders()
 ```
-
-## Working with This Structure
-
-When adding a new test:
-
-1. Create a folder for your test inputs in `Commands/[CommandName]/[FixtureName]/[ScenarioName]/[TestName]/`
-2. Add your test method following the naming convention: `[Command]_[Fixture]_[ScenarioName]_[TestName]`
-3. The first time your test runs, it will create expected logs and results files
-4. Verify the expected output manually to ensure it's correct
-
-For tests without a specific fixture, use `NoFixture` as the fixture name.
-
-Note: The [ScenarioName] should typically start with "When" to describe the condition being tested, such as "WhenWriteEnabled" or "WhenReadOnly".

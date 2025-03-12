@@ -24,9 +24,8 @@
         "**/*.filelist",
         "**/*.user",
         "**/*.lock.json",
-        "**/*.json",
-        "**/SES.ConsoleApplication.IntegrationTests/**",
-        "SES.ConsoleApplication.sln",
+        "**/src/SES.ConsoleApplication/*.json",
+        "**/logs/log_*.txt",
         "SES.ConsoleApplication.sln.DotSettings.user",
         "CLAUDE.md",
         "README.md",
@@ -38,19 +37,10 @@
         "README.template.md": "README.md",
         "TIMELINE.template.md": "TIMELINE.md",
         "appsettings.tmp": "appsettings.json",
-        "ZLogger_settings_for_ULogViewer.tmp": "ZLogger_settings_for_ULogViewer.json",
-        "SES.ConsoleApplication.template.sln": "SES.ConsoleApplication.sln"
+        "ZLogger_settings_for_ULogViewer.tmp": "ZLogger_settings_for_ULogViewer.json"
       }
     }
   ],
-  "symbols": {
-    "UseHosted": {
-      "type": "parameter",
-      "datatype": "bool",
-      "defaultValue": "true",
-      "description": "Use hosted (true) or non-hosted (false) application mode"
-    }
-  },
   "postActions": [
     {
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
