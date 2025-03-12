@@ -2,6 +2,18 @@
 
 This directory contains all the test data used by the integration tests. The structure is designed to provide a clear organisation pattern that scales well as more commands, fixtures, and tests are added.
 
+## Migration from Legacy Structure
+
+This new structure replaces the legacy TestCases folder structure. The old structure had:
+- A folder for each test case (Case1, Case2, etc.)
+- Input and expected output files in each folder
+
+The new structure organizes test data hierarchically by command, fixture, and scenario:
+- Commands are now grouped together (Echo, Add, etc.)
+- Fixtures provide reusable test environments
+- Scenarios represent different test conditions (When...)
+- Test names describe the expected behavior (Should...)
+
 ## Folder Structure
 
 The test data is organised in a hierarchical structure following the pattern:
