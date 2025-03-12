@@ -1,0 +1,11 @@
+{
+  "Paths": {
+    "ExpectedLogsPath": "../../../TestData/ExpectedLogs",
+    "ExpectedResultsPath": "../../../TestData/ExpectedResults",
+    "TestDataPath": "../../../TestData"
+  },
+  "FolderNames": {
+    "BinDataFolderName": "data"
+  },
+  "VerifyLogs": true
+}

@@ -30,11 +30,13 @@
         "SES.ConsoleApplication.sln.DotSettings.user",
         "CLAUDE.md",
         "README.md",
+		"TIMELINE.md",
 		"create_template.cmd"
       ],
       "rename": {
         "CLAUDE.template.md": "CLAUDE.md",
         "README.template.md": "README.md",
+        "TIMELINE.template.md": "TIMELINE.md",
         "appsettings.tmp": "appsettings.json",
 		"ZLogger_settings_for_ULogViewer.tmp": "ZLogger_settings_for_ULogViewer.json",
         "SES.ConsoleApplication.template.sln": "SES.ConsoleApplication.sln"
