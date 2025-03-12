@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication.IntegrationTests", "SES.ConsoleApplication.IntegrationTests\SES.ConsoleApplication.IntegrationTests.csproj", "{4A20057F-E232-4099-870F-0F99E9D9E3BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SES.ConsoleApplication.UnitTests", "SES.ConsoleApplication.UnitTests\SES.ConsoleApplication.UnitTests.csproj", "{3E7384A8-1333-4432-9618-514BA121089B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4A20057F-E232-4099-870F-0F99E9D9E3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A20057F-E232-4099-870F-0F99E9D9E3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A20057F-E232-4099-870F-0F99E9D9E3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E7384A8-1333-4432-9618-514BA121089B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E7384A8-1333-4432-9618-514BA121089B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E7384A8-1333-4432-9618-514BA121089B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E7384A8-1333-4432-9618-514BA121089B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

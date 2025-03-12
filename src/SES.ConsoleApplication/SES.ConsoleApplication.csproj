@@ -6,6 +6,23 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+            <_Parameter1>SES.ConsoleApplication.UnitTests</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
+	
+	<!-- Define conditional compilation symbols based on the OS -->
+	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+		<DefineConstants>LINUX</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+		<DefineConstants>WINDOWS</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+		<DefineConstants>OSX</DefineConstants>
+	</PropertyGroup>
 	
 	<ItemGroup>
 		<None Update="appsettings.json">

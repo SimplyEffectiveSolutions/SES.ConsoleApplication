@@ -20,8 +20,16 @@ dotnet run --environment Production
 # Run with specific config file
 dotnet run --project SES.ConsoleApplication -- echo -m "message" --config path/to/config.json
 
-# Run integration tests
+# Run all tests
 dotnet test
+
+# Run specific test project
+dotnet test src/SES.ConsoleApplication.UnitTests
+dotnet test src/SES.ConsoleApplication.IntegrationTests
+
+# Run tests with filtering
+dotnet test --filter "FullyQualifiedName~UnitTests"
+dotnet test --filter "Category=Unit"
 ```
 
 ## Code Style Guidelines
@@ -38,6 +46,10 @@ dotnet test
 - Commands/ - Application commands (each command = separate class)
 - Filters/ - Cross-cutting middleware pipeline components
 - Options/ - Configuration option classes
+
+### Test Structure
+- SES.ConsoleApplication.UnitTests/ - Unit tests for individual components
+- SES.ConsoleApplication.IntegrationTests/ - Integration tests for configuration and end-to-end functionality
 
 ## Instructions
 - Add an integration test for every new feature
@@ -69,12 +81,14 @@ We've created a robust .NET Console Application project template with configurat
 - `/.template.config/template.json` - Template configuration
 - `/SES.ConsoleApplication.IntegrationTests/ConfigurationIntegrationTests.cs` - Integration tests
 - `/SES.ConsoleApplication.IntegrationTests/TestCases/` - Test data and expected outputs
+- `/SES.ConsoleApplication.UnitTests/` - Unit tests for individual components
 - `/CLAUDE.md` - Developer guidelines and commands
 
 ### Next Steps
 Potential next steps could include:
 1. Adding more test cases for different configuration scenarios
-2. Supporting additional command-line parameters in the template
-3. Adding more application commands beyond the Echo example
-4. Implementing more filter examples for cross-cutting concerns
-5. Enhancing the logging functionality with rotation or additional formats
+2. Expanding unit test coverage for all components
+3. Supporting additional command-line parameters in the template
+4. Adding more application commands beyond the Echo example
+5. Implementing more filter examples for cross-cutting concerns
+6. Enhancing the logging functionality with rotation or additional formats
