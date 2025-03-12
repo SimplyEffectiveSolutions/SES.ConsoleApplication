@@ -12,13 +12,13 @@ dotnet publish -c Release -r win-x64 --self-contained
 dotnet run --project SES.ConsoleApplication
 
 # Run with specific command
-dotnet run --project SES.ConsoleApplication -- echo -m "message" -k "key"
+dotnet run --project SES.ConsoleApplication -- run -m "message" -k "key"
 
 # Run with environment configuration
 dotnet run --environment Production
 
 # Run with specific config file
-dotnet run --project SES.ConsoleApplication -- echo -m "message" --config path/to/config.json
+dotnet run --project SES.ConsoleApplication -- run -m "message" --config path/to/config.json
 
 # Run all tests
 dotnet test

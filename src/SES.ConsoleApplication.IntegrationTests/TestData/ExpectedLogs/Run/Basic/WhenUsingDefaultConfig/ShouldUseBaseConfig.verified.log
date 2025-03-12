@@ -1,0 +1,12 @@
+2025-03-12 23:17:21.075 [INF]: (Command: run): Starting...
+2025-03-12 23:17:21.078 [TRC]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a trace message
+2025-03-12 23:17:21.078 [DBG]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a debug message
+2025-03-12 23:17:21.078 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging an information message
+2025-03-12 23:17:21.078 [WRN]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a warning message
+2025-03-12 23:17:21.079 [ERR]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging an error message
+2025-03-12 23:17:21.079 [CRI]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a critical message
+2025-03-12 23:17:21.079 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Message: TestMessage
+2025-03-12 23:17:21.083 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Title: DefaultTitle
+2025-03-12 23:17:21.083 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Name: DefaultName
+2025-03-12 23:17:21.083 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Key: 
+2025-03-12 23:17:21.083 [INF]: (Command: run): Finished successfully, Elapsed: 00:00:00.0127269

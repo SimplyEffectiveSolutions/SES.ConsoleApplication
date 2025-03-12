@@ -2,6 +2,18 @@
 
 This directory contains all the test data used by the integration tests. The structure is designed to provide a clear organisation pattern that scales well as more commands, fixtures, and tests are added.
 
+## Migration from Legacy Structure
+
+This new structure replaces the legacy TestCases folder structure. The old structure had:
+- A folder for each test case (Case1, Case2, etc.)
+- Input and expected output files in each folder
+
+The new structure organizes test data hierarchically by command, fixture, and scenario:
+- Commands are now grouped together (Echo, Add, etc.)
+- Fixtures provide reusable test environments
+- Scenarios represent different test conditions (When...)
+- Test names describe the expected behavior (Should...)
+
 ## Folder Structure
 
 The test data is organised in a hierarchical structure following the pattern:
@@ -13,6 +25,7 @@ TestData/
 │   └── [CommandName]/
 │       └── [FixtureName]/
 │           └── [TestName]/
+│               └── _EXE/          # Special folder - contents copied to executable directory
 ├── ExpectedLogs/                  # Expected command outputs (logs)
 │   └── [CommandName]/
 │       └── [FixtureName]/
@@ -40,6 +53,14 @@ The `ExpectedLogs` folder contains the expected console output logs for each tes
 ### ExpectedResults
 
 The `ExpectedResults` folder contains the expected file states after a command has been executed, organised by command name, fixture name, scenario name, and test name.
+
+### Special _EXE Folder
+
+A special folder named `_EXE` can be included in any test data directory. The contents of this folder will be copied directly to the executable directory (where SES.ConsoleApplication.dll is located), rather than to the destination test directory. This is useful for:
+
+- Configuration files that need to be in the same directory as the executable
+- Override files that should be loaded from the executable directory
+- Any files that the application expects to find in its own directory
 
 ## Test Naming Convention
 

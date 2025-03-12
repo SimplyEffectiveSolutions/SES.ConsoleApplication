@@ -10,6 +10,7 @@ namespace SES.ConsoleApplication.IntegrationTests.Commands.Base;
 
 public abstract class BaseCommandTest
 {
+    protected readonly string _binPath;
     protected readonly string _binDataPath;
     protected readonly string _binExecutablePath;
     protected readonly string _expectedLogsPath;
@@ -31,6 +32,7 @@ public abstract class BaseCommandTest
 
         // Get the current directory and navigate to the test bin data
         var currentDirectory = Directory.GetCurrentDirectory();
+        _binPath = currentDirectory;
         _binDataPath = Path.Combine(currentDirectory, config.FolderNames.BinDataFolderName);
 
         // Navigate to the executable path
@@ -42,8 +44,6 @@ public abstract class BaseCommandTest
             throw new FileNotFoundException($"Executable not found at path: {_binExecutablePath}. Please build the main project first.");
         }
     }
-
-    protected string CommandName { get; set; }
 
     /// <summary>
     ///     Runs a command and returns the output
@@ -142,8 +142,8 @@ public abstract class BaseCommandTest
         // Create target directory if it doesn't exist
         Directory.CreateDirectory(targetDirectory);
 
-        // Use FileSystem.CopyDirectory
-        FileSystem.CopyDirectory(sourceDirectory, targetDirectory, true);
+        // Use our custom copy method that handles _EXE folders
+        CopyDirectoryWithSpecialFolders(sourceDirectory, targetDirectory);
 
         _output.WriteLine($"Copied fixture directory from {sourceDirectory} to {targetDirectory} for test: {testName}");
     }
@@ -155,11 +155,11 @@ public abstract class BaseCommandTest
     protected void CopyCommandDataDirectoryToTestDirectory([CallerMemberName] string callerMethodName = null)
     {
         // Parse all parts from the method name
-        var (_, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
+        var (commandName, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
 
         // Source directory path in commands folder
         // Don't use scenario name for now
-        var sourceDirectory = Path.Combine(_testDataPath, "Commands", CommandName, fixtureName, testName);
+        var sourceDirectory = Path.Combine(_testDataPath, "Commands", commandName, fixtureName, testName);
 
         // Get the target directory
         var targetDirectory = Path.Combine(_binDataPath, fixtureName);
@@ -173,10 +173,59 @@ public abstract class BaseCommandTest
         // Create target directory if it doesn't exist
         Directory.CreateDirectory(targetDirectory);
 
-        // Use FileSystem.CopyDirectory
-        FileSystem.CopyDirectory(sourceDirectory, targetDirectory, true);
+        // Use our custom copy method that handles _EXE folders
+        CopyDirectoryWithSpecialFolders(sourceDirectory, targetDirectory);
 
         _output.WriteLine($"Copied command directory from {sourceDirectory} to {targetDirectory} for test: {testName}");
+    }
+
+    /// <summary>
+    /// Copies a directory and its contents to a destination directory.
+    /// Special handling for directories named "_EXE" - contents will be copied to the executable directory.
+    /// </summary>
+    /// <param name="sourceDir">Source directory path</param>
+    /// <param name="destDir">Destination directory path</param>
+    protected void CopyDirectoryWithSpecialFolders(string sourceDir, string destDir)
+    {
+        // Create the destination directory if it doesn't exist
+        if (!Directory.Exists(destDir))
+        {
+            Directory.CreateDirectory(destDir);
+        }
+
+        // Copy all files from source to destination
+        foreach (var file in Directory.GetFiles(sourceDir))
+        {
+            var fileName = Path.GetFileName(file);
+            var destFilePath = Path.Combine(destDir, fileName);
+            File.Copy(file, destFilePath, true);
+        }
+
+        // Process subdirectories
+        foreach (var subDir in Directory.GetDirectories(sourceDir))
+        {
+            var dirName = Path.GetFileName(subDir);
+
+            // Check if this is a special _EXE folder
+            if (dirName.Equals("_EXE", StringComparison.OrdinalIgnoreCase))
+            {
+                // Copy contents to the exe directory instead of the normal destination
+                _output.WriteLine($"Copying _EXE folder contents from {subDir} to executable directory: {_binPath}");
+
+                foreach (var file in Directory.GetFiles(subDir))
+                {
+                    var fileName = Path.GetFileName(file);
+                    var destFilePath = Path.Combine(_binPath, fileName);
+                    File.Copy(file, destFilePath, true);
+                }
+            }
+            else
+            {
+                // Normal directory - process recursively
+                var destSubDir = Path.Combine(destDir, dirName);
+                CopyDirectoryWithSpecialFolders(subDir, destSubDir);
+            }
+        }
     }
 
     /// <summary>
@@ -232,7 +281,7 @@ public abstract class BaseCommandTest
     protected void VerifyActualFileAgainstExpected(string filePath, string patternToReplace = null, [CallerMemberName] string callerMethodName = null)
     {
         // Extract all components from the method name
-        var (_, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
+        var (commandName, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
 
         // Make sure the file exists
         if (!File.Exists(filePath))
@@ -269,7 +318,7 @@ public abstract class BaseCommandTest
         var expectedPartialPath = relativePath.Replace($"{fileName}{fileExtension}", $"{fileName}.verified{fileExtension}");
 
         // Construct path to expected file - maintain the folder structure
-        var expectedBasePath = Path.Combine(_expectedResultsPath, CommandName, fixtureName, scenarioName, testName);
+        var expectedBasePath = Path.Combine(_expectedResultsPath, commandName, fixtureName, scenarioName, testName);
         var expectedFullPath = Path.Combine(expectedBasePath, expectedPartialPath);
 
         _output.WriteLine($"Checking file against expected content: {expectedFullPath}");
@@ -346,7 +395,7 @@ public abstract class BaseCommandTest
         }
 
         // Parse all parts from the method name
-        var (_, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
+        var (commandName, fixtureName, scenarioName, testName) = ParseTestMethodName(callerMethodName);
 
         // Apply content replacements if provided
         if (!string.IsNullOrEmpty(patternToReplace))
@@ -356,7 +405,7 @@ public abstract class BaseCommandTest
 
         // Check there is no unverified.log file in the directory first. Otherwise return false immediately.
         // NOTE: unverified.logs MUST be manually verified and renamed first!
-        var unverifiedPartialLogPath = Path.Combine(CommandName, fixtureName, scenarioName, $"{testName}.unverified.log");
+        var unverifiedPartialLogPath = Path.Combine(commandName, fixtureName, scenarioName, $"{testName}.unverified.log");
         var unverifiedFullLogPath = Path.Combine(_expectedLogsPath, unverifiedPartialLogPath);
 
         if (File.Exists(unverifiedFullLogPath))
@@ -365,7 +414,7 @@ public abstract class BaseCommandTest
         }
 
         // Construct path using CommandName, fixtureName, scenarioName, and testName
-        var expectedPartialLogPath = Path.Combine(CommandName, fixtureName, scenarioName, $"{testName}.verified.log");
+        var expectedPartialLogPath = Path.Combine(commandName, fixtureName, scenarioName, $"{testName}.verified.log");
         var expectedFullLogPath = Path.Combine(_expectedLogsPath, expectedPartialLogPath);
 
         _output.WriteLine($"Checking actual output against expected log: {expectedFullLogPath}");

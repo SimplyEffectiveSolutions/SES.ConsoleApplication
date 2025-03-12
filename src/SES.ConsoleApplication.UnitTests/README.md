@@ -12,12 +12,12 @@ This project contains unit tests for the SES.ConsoleApplication project. The tes
 
 1. **Test Organization**:
    - Organize tests by component type, mirroring the structure of the main project
-   - Name test classes with the suffix "Tests" (e.g., `MyCommandTests`)
+   - Name test classes with the suffix "Tests" (e.g., `MyBasicCommandTests`)
    - Group related tests within the same file
 
 2. **Test Naming**:
    - Use descriptive method names in the format: `MethodName_Scenario_ExpectedResult`
-   - Example: `Echo_WithMessageAndKey_LogsInformation`
+   - Example: `Run_WithMessageAndKey_LogsInformation`
 
 3. **Test Structure**:
    - Follow the Arrange-Act-Assert (AAA) pattern
@@ -43,5 +43,5 @@ dotnet test
 dotnet test -v n
 
 # Run a specific test
-dotnet test --filter "FullyQualifiedName=SES.ConsoleApplication.UnitTests.Commands.MyCommandTests.Echo_WithMessageAndKey_LogsInformation"
+dotnet test --filter "FullyQualifiedName=SES.ConsoleApplication.UnitTests.Commands.MyBasicCommandTests.Run_WithMessageAndKey_LogsInformation"
 ```
