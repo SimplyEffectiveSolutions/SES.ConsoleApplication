@@ -1,10 +1,10 @@
 <!--
-- After each major task or after completing a /compact, write down the summary in this file starting with a timestamp in the header.
-- Example: # yyyy-MM-dd HH:mm:ss <title>
+Logging Guidelines:
+- Record task summaries with timestamp headers: # yyyy-MM-dd HH:mm:ss <title>
 - Use markdown format
-- IMPORTANT FOR CLAUDE: When adding a new entry, always put it at the top of the file with a new timestamp heading. DO NOT alter or remove existing entries.
-- IMPORTANT FOR CLAUDE: Each timestamp heading creates a new history section. Do not copy sections from previous entries.
-- IMPORTANT FOR CLAUDE: Do not duplicate content in multiple sections - sections should not repeat the same information.
+- Always add new entries at top with fresh timestamps
+- Each timestamp creates a separate section - don't copy previous sections
+- Avoid duplicate information across sections
  -->
 
 # 2025-03-12 23:38:24 Command and Test Structure Refinement
