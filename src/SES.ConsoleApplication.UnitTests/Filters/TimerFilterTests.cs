@@ -1,21 +1,16 @@
-using ConsoleAppFramework;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
-using SES.ConsoleApplication.Filters;
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace SES.ConsoleApplication.UnitTests.Filters;
 
 public class TimerFilterTests
 {
+    private readonly Mock<ILoggerFactory> _loggerFactoryMock;
+
+    private readonly Mock<ILogger> _loggerMock;
+
     // Simplified test that doesn't rely on internal ConsoleApp types
     private readonly Mock<IServiceProvider> _serviceProviderMock;
-    private readonly Mock<ILoggerFactory> _loggerFactoryMock;
-    private readonly Mock<ILogger> _loggerMock;
 
     public TimerFilterTests()
     {
@@ -35,7 +30,7 @@ public class TimerFilterTests
     {
         // This simplified test just verifies we can use the InternalsVisibleTo attribute
         // In a real implementation, we would need more complex setup to test TimerFilter
-        
+
         // We can't easily test TimerFilter without mocking the internal ConsoleAppFilter class
         // For now, we're just verifying the basic infrastructure works
         Assert.True(true);

@@ -14,17 +14,17 @@ internal class TimerFilter(ConsoleAppFilter next) : ConsoleAppFilter(next)
         {
             return;
         }
-        
+
         var logFactory = ConsoleApp.ServiceProvider.GetService<ILoggerFactory>();
         var logger = logFactory.CreateLogger($"Command: {context.CommandName}");
 
         var startTime = Stopwatch.GetTimestamp();
-        logger.ZLogInformation($"Starting..."); 
-        
+        logger.ZLogInformation($"Starting...");
+
         try
         {
             await Next.InvokeAsync(context, cancellationToken);
-            logger.ZLogInformation($"Finished successfully, Elapsed: {Stopwatch.GetElapsedTime(startTime)}"); 
+            logger.ZLogInformation($"Finished successfully, Elapsed: {Stopwatch.GetElapsedTime(startTime)}");
         }
         catch
         {

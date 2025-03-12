@@ -4,8 +4,7 @@ using ZLogger;
 
 namespace SES.ConsoleApplication.Filters;
 
-internal sealed class ReplaceLogFilter(ConsoleAppFilter next, ILogger<Program> logger)
-    : ConsoleAppFilter(next)
+internal sealed class ReplaceLogFilter(ConsoleAppFilter next, ILogger<Program> logger) : ConsoleAppFilter(next)
 {
     public override Task InvokeAsync(ConsoleAppContext context, CancellationToken cancellationToken)
     {

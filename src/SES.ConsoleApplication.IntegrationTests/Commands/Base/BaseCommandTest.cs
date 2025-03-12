@@ -2,7 +2,6 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.VisualBasic.FileIO;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -10,9 +9,9 @@ namespace SES.ConsoleApplication.IntegrationTests.Commands.Base;
 
 public abstract class BaseCommandTest
 {
-    protected readonly string _binPath;
     protected readonly string _binDataPath;
     protected readonly string _binExecutablePath;
+    protected readonly string _binPath;
     protected readonly string _expectedLogsPath;
     protected readonly string _expectedResultsPath;
     protected readonly ITestOutputHelper _output;
@@ -180,8 +179,8 @@ public abstract class BaseCommandTest
     }
 
     /// <summary>
-    /// Copies a directory and its contents to a destination directory.
-    /// Special handling for directories named "_EXE" - contents will be copied to the executable directory.
+    ///     Copies a directory and its contents to a destination directory.
+    ///     Special handling for directories named "_EXE" - contents will be copied to the executable directory.
     /// </summary>
     /// <param name="sourceDir">Source directory path</param>
     /// <param name="destDir">Destination directory path</param>
@@ -492,12 +491,14 @@ public abstract class BaseCommandTest
     }
 
     /// <summary>
-    /// Normalizes log output for cross-platform comparison by removing platform-specific elements
+    ///     Normalizes log output for cross-platform comparison by removing platform-specific elements
     /// </summary>
     private string NormalizeLogForComparison(string log)
     {
         if (string.IsNullOrEmpty(log))
+        {
             return string.Empty;
+        }
 
         // Remove timestamps and standardize log format
         log = Regex.Replace(log, @"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d+ ", "", RegexOptions.Multiline);

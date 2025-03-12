@@ -1,5 +1,4 @@
-﻿using ConsoleAppFramework;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SES.ConsoleApplication.Options;
@@ -14,7 +13,10 @@ public class MyBasicCommand(IConfiguration configuration, IOptions<BasicOptions>
     /// <summary>Run command. Print a message to screen.</summary>
     /// <param name="msg">-m, The message.</param>
     /// <param name="key">-k, Key value.</param>
-    /// <param name="config">-c, Config file path. The utility will look for a appsettings.json file in the EXE folder by default. You can however override the default settings with your own.</param>
+    /// <param name="config">
+    ///     -c, Config file path. The utility will look for a appsettings.json file in the EXE folder by default. You can however override the default settings with your
+    ///     own.
+    /// </param>
     public void Run(string msg, string key = "", string config = "")
     {
         using (logger.BeginScope("Logging Levels"))

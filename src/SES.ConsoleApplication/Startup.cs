@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SES.ConsoleApplication.Options;
+using Utf8StringInterpolation;
 using ZLogger;
 using ZLogger.Formatters;
 
@@ -49,7 +50,7 @@ public static class Startup
         if (!Path.IsPathRooted(logsFolder))
         {
             // Get the directory where the executable is running from
-            string exeDirectory = Directory.GetCurrentDirectory();
+            var exeDirectory = Directory.GetCurrentDirectory();
             logsFolder = Path.GetFullPath(Path.Combine(exeDirectory, logsFolder));
         }
 
@@ -57,7 +58,7 @@ public static class Startup
         Directory.CreateDirectory(logsFolder);
 
         // Get log retention period in days (default to 7 days if not specified)
-        var retentionDays = configuration.GetValue<int>("Logging:LogRetentionDays", 7);
+        var retentionDays = configuration.GetValue("Logging:LogRetentionDays", 7);
 
         // Clean up old log files based on retention policy
         CleanupOldLogFiles(logsFolder, retentionDays);
@@ -102,7 +103,7 @@ public static class Startup
     internal static ConsoleApp.ConsoleAppBuilder CreateHostedConsoleAppBuilder(string[] args)
     {
         // Check to see if the --config parameter has been set
-        var configPath = Startup.SetConfigPath(args);
+        var configPath = SetConfigPath(args);
 
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
@@ -113,12 +114,12 @@ public static class Startup
         var env = builder.Environment;
 
         builder.Configuration.Sources.Clear();
-        builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        builder.Configuration.AddJsonFile("appsettings.json", true, true);
         builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
 
         if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
         {
-            builder.Configuration.AddJsonFile(configPath, optional: false, reloadOnChange: true);
+            builder.Configuration.AddJsonFile(configPath, false, true);
         }
 
         builder.Configuration.AddCommandLine(args, argsMapping); // TODO: Update mappings if required
@@ -126,8 +127,10 @@ public static class Startup
         // NOTE: Shows the configuration overrides. This is completely managed by IHost
         //var configDebugView = builder.Configuration.GetDebugView();
 
-        builder.Logging.ClearProviders()
-            .AddZLoggerConsole((options, services) =>
+        builder
+            .Logging.ClearProviders()
+            .AddZLoggerConsole(
+                (options, services) =>
                 {
                     var config = services.GetRequiredService<IConfiguration>();
 
@@ -135,13 +138,16 @@ public static class Startup
                     options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
                 }
             )
-            .AddZLoggerFile(GetLogFilePath(builder.Configuration), (options, services) =>
-            {
-                var config = services.GetRequiredService<IConfiguration>();
+            .AddZLoggerFile(
+                GetLogFilePath(builder.Configuration),
+                (options, services) =>
+                {
+                    var config = services.GetRequiredService<IConfiguration>();
 
-                options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
-                options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
-            });
+                    options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
+                    options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
+                }
+            );
 
         //-------------------
         // TODO: Add options
@@ -154,13 +160,14 @@ public static class Startup
     internal static ConsoleApp.ConsoleAppBuilder CreateNonHostedConsoleAppBuilder(string[] args)
     {
         // Check to see if the --config parameter has been set
-        var configPath = Startup.SetConfigPath(args);
+        var configPath = SetConfigPath(args);
 
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
         // TODO: add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
 
-        var app = ConsoleApp.Create()
+        var app = ConsoleApp
+            .Create()
             .ConfigureDefaultConfiguration(
                 builder =>
                 {
@@ -171,38 +178,48 @@ public static class Startup
 
                     if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
                     {
-                        builder.AddJsonFile(configPath, optional: false, reloadOnChange: true);
+                        builder.AddJsonFile(configPath, false, true);
                     }
 
                     // Override config file values with the user supplied command line values
                     builder.AddCommandLine(args, argsMapping); // TODO: Update mappings if required
                 }
             )
-            .ConfigureServices((configuration, services) =>
-            {
-                services.Clear();
-
-                //-----------------------
-                // TODO: Add options here
-                services.Configure<BasicOptions>(configuration.GetSection("Basic"));
-
-                services.AddSingleton<IConfiguration>(configuration);
-            })
-            .ConfigureLogging((config, builder) =>
-            {
-                builder.ClearProviders()
-                .SetMinimumLevel(LogLevel.Trace)
-                .AddZLoggerConsole((options, services) =>
+            .ConfigureServices(
+                (configuration, services) =>
                 {
-                    options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerConsole:IncludeScopes");
-                    options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
-                })
-                .AddZLoggerFile(GetLogFilePath(config), (options, services) =>
+                    services.Clear();
+
+                    //-----------------------
+                    // TODO: Add options here
+                    services.Configure<BasicOptions>(configuration.GetSection("Basic"));
+
+                    services.AddSingleton(configuration);
+                }
+            )
+            .ConfigureLogging(
+                (config, builder) =>
                 {
-                    options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
-                    options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
-                });
-            });
+                    builder
+                        .ClearProviders()
+                        .SetMinimumLevel(LogLevel.Trace)
+                        .AddZLoggerConsole(
+                            (options, services) =>
+                            {
+                                options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerConsole:IncludeScopes");
+                                options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
+                            }
+                        )
+                        .AddZLoggerFile(
+                            GetLogFilePath(config),
+                            (options, services) =>
+                            {
+                                options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
+                                options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
+                            }
+                        );
+                }
+            );
 
         return app;
     }
@@ -210,16 +227,18 @@ public static class Startup
     private static void ConfigureFormatter(PlainTextZLoggerFormatter formatter, bool areScopesIncluded)
     {
         //formatter.SetPrefixFormatter($"{0:local-longdate} {1:+##;-##;0} [{2:short}]: ({3}{4}{5}): ", // Include timezone
-        formatter.SetPrefixFormatter($"{0:local-longdate} [{1:short}]: ({2}{3}{4}): ",
-            (in MessageTemplate template, in LogInfo info)
-                => template.Format(
+        formatter.SetPrefixFormatter(
+            $"{0:local-longdate} [{1:short}]: ({2}{3}{4}): ",
+            (in MessageTemplate template, in LogInfo info) =>
+                template.Format(
                     info.Timestamp,
                     //info.Timestamp.Local.Hour,
                     info.LogLevel,
                     info.Category,
-                    (info.ScopeState != null && info.ScopeState.IsEmpty || !areScopesIncluded) ? string.Empty : " => ",
-                    info.ScopeState != null && info.ScopeState.IsEmpty ? string.Empty : info.ScopeState?.Properties[0].Value)
-                );
-        formatter.SetExceptionFormatter((writer, ex) => Utf8StringInterpolation.Utf8String.Format(writer, $"{ex.Message}"));
+                    info.ScopeState != null && info.ScopeState.IsEmpty || !areScopesIncluded ? string.Empty : " => ",
+                    info.ScopeState != null && info.ScopeState.IsEmpty ? string.Empty : info.ScopeState?.Properties[0].Value
+                )
+        );
+        formatter.SetExceptionFormatter((writer, ex) => Utf8String.Format(writer, $"{ex.Message}"));
     }
 }

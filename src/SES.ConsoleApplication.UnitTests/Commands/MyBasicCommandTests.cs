@@ -4,35 +4,35 @@ using Microsoft.Extensions.Options;
 using Moq;
 using SES.ConsoleApplication.Commands;
 using SES.ConsoleApplication.Options;
-using System.Collections.Generic;
 
 namespace SES.ConsoleApplication.UnitTests.Commands;
 
 public class MyBasicCommandTests
 {
+    private readonly MyBasicCommand _basicCommand;
+    private readonly IConfiguration _configuration;
     private readonly Mock<ILogger<MyBasicCommand>> _loggerMock;
     private readonly IOptions<BasicOptions> _options;
-    private readonly IConfiguration _configuration;
-    private readonly MyBasicCommand _basicCommand;
 
     public MyBasicCommandTests()
     {
         // Setup configuration
-        var inMemorySettings = new Dictionary<string, string> {
-            {"Position:Title", "Test Title"},
-            {"Position:Name", "Test Name"},
+        var inMemorySettings = new Dictionary<string, string>
+        {
+            { "Position:Title", "Test Title" },
+            { "Position:Name", "Test Name" },
         };
 
-        _configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(inMemorySettings)
-            .Build();
+        _configuration = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
 
         // Setup real options using Microsoft.Extensions.Options.Options.Create
-        _options = Microsoft.Extensions.Options.Options.Create(new BasicOptions
-        {
-            Title = "Test Title",
-            Name = "Test Name"
-        });
+        _options = Microsoft.Extensions.Options.Options.Create(
+            new BasicOptions
+            {
+                Title = "Test Title",
+                Name = "Test Name",
+            }
+        );
 
         // Setup logger
         _loggerMock = new Mock<ILogger<MyBasicCommand>>();
