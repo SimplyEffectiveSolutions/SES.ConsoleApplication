@@ -44,7 +44,7 @@ public static class Startup
     {
         // Get logs folder from configuration or use default "logs"
         var logsFolder = configuration.GetValue<string>("Logging:LogsFolder") ?? "logs";
-        
+
         // Convert relative path to absolute path if needed
         if (!Path.IsPathRooted(logsFolder))
         {
@@ -52,23 +52,23 @@ public static class Startup
             string exeDirectory = Directory.GetCurrentDirectory();
             logsFolder = Path.GetFullPath(Path.Combine(exeDirectory, logsFolder));
         }
-        
+
         // Ensure the directory exists
         Directory.CreateDirectory(logsFolder);
-        
+
         // Get log retention period in days (default to 7 days if not specified)
         var retentionDays = configuration.GetValue<int>("Logging:LogRetentionDays", 7);
-        
+
         // Clean up old log files based on retention policy
         CleanupOldLogFiles(logsFolder, retentionDays);
-        
+
         // Create a timestamped filename in yyyyMMdd-HHmm format
         var timestamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
-        
+
         // Return the full path to the log file with timestamp
         return Path.Combine(logsFolder, $"log_{timestamp}.txt");
     }
-    
+
     // Deletes log files based on retention policy
     private static void CleanupOldLogFiles(string logsFolder, int retentionDays)
     {
@@ -76,7 +76,7 @@ public static class Startup
         {
             var now = DateTime.Now;
             var cutoffDate = now.AddDays(-retentionDays);
-            
+
             foreach (var file in Directory.GetFiles(logsFolder, "log_*.txt"))
             {
                 var fileInfo = new FileInfo(file);
@@ -103,26 +103,26 @@ public static class Startup
     {
         // Check to see if the --config parameter has been set
         var configPath = Startup.SetConfigPath(args);
-        
+
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
         argsMapping.Add("-k", "Key");
         // TODO: For new projects: Add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
-        
+
         var builder = Host.CreateApplicationBuilder(args); // Set's the current root path by default
         var env = builder.Environment;
 
         builder.Configuration.Sources.Clear();
         builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
         builder.Configuration.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
-        
+
         if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
         {
             builder.Configuration.AddJsonFile(configPath, optional: false, reloadOnChange: true);
         }
-        
+
         builder.Configuration.AddCommandLine(args, argsMapping); // TODO: Update mappings if required
-        
+
         // NOTE: Shows the configuration overrides. This is completely managed by IHost
         //var configDebugView = builder.Configuration.GetDebugView();
 
@@ -130,7 +130,7 @@ public static class Startup
             .AddZLoggerConsole((options, services) =>
                 {
                     var config = services.GetRequiredService<IConfiguration>();
-        
+
                     options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerConsole:IncludeScopes");
                     options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
                 }
@@ -138,15 +138,15 @@ public static class Startup
             .AddZLoggerFile(GetLogFilePath(builder.Configuration), (options, services) =>
             {
                 var config = services.GetRequiredService<IConfiguration>();
-        
+
                 options.IncludeScopes = config.GetValue<bool>("Logging:ZLoggerFile:IncludeScopes");
                 options.UsePlainTextFormatter(formatter => ConfigureFormatter(formatter, options.IncludeScopes));
             });
 
         //-------------------
         // TODO: Add options
-        builder.Services.Configure<PositionOptions>(builder.Configuration.GetSection("Position"));
-        
+        builder.Services.Configure<BasicOptions>(builder.Configuration.GetSection("Basic"));
+
         var app = builder.ToConsoleAppBuilder();
         return app;
     }
@@ -155,25 +155,25 @@ public static class Startup
     {
         // Check to see if the --config parameter has been set
         var configPath = Startup.SetConfigPath(args);
-        
+
         // Mapping for arg keys to JSON configuration property name
         var argsMapping = new Dictionary<string, string>();
         // TODO: add mappings if required (e.g. argsMapping.Add("--key", "json:property:key");)
-        
+
         var app = ConsoleApp.Create()
             .ConfigureDefaultConfiguration(
                 builder =>
                 {
                     // NOTE: The appsetting.json file in the EXE folder is added by default
-                    
+
                     // NOTE: builder does not have an Environment so we can't add the following JSON file. (Like we did with the Hosted version)
                     //builder.AddJsonFile($"appsettings.{builder.Environment}.json", true, true);
-                    
+
                     if (!string.IsNullOrEmpty(configPath) && File.Exists(configPath))
                     {
                         builder.AddJsonFile(configPath, optional: false, reloadOnChange: true);
                     }
-                    
+
                     // Override config file values with the user supplied command line values
                     builder.AddCommandLine(args, argsMapping); // TODO: Update mappings if required
                 }
@@ -181,11 +181,11 @@ public static class Startup
             .ConfigureServices((configuration, services) =>
             {
                 services.Clear();
-                
+
                 //-----------------------
                 // TODO: Add options here
-                services.Configure<PositionOptions>(configuration.GetSection("Position"));
-                
+                services.Configure<BasicOptions>(configuration.GetSection("Basic"));
+
                 services.AddSingleton<IConfiguration>(configuration);
             })
             .ConfigureLogging((config, builder) =>
@@ -211,13 +211,13 @@ public static class Startup
     {
         //formatter.SetPrefixFormatter($"{0:local-longdate} {1:+##;-##;0} [{2:short}]: ({3}{4}{5}): ", // Include timezone
         formatter.SetPrefixFormatter($"{0:local-longdate} [{1:short}]: ({2}{3}{4}): ",
-            (in MessageTemplate template, in LogInfo info) 
+            (in MessageTemplate template, in LogInfo info)
                 => template.Format(
-                    info.Timestamp, 
-                    //info.Timestamp.Local.Hour, 
-                    info.LogLevel, 
-                    info.Category, 
-                    (info.ScopeState != null && info.ScopeState.IsEmpty || !areScopesIncluded) ? string.Empty : " => ", 
+                    info.Timestamp,
+                    //info.Timestamp.Local.Hour,
+                    info.LogLevel,
+                    info.Category,
+                    (info.ScopeState != null && info.ScopeState.IsEmpty || !areScopesIncluded) ? string.Empty : " => ",
                     info.ScopeState != null && info.ScopeState.IsEmpty ? string.Empty : info.ScopeState?.Properties[0].Value)
                 );
         formatter.SetExceptionFormatter((writer, ex) => Utf8StringInterpolation.Utf8String.Format(writer, $"{ex.Message}"));

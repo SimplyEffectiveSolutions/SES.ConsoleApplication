@@ -24,7 +24,7 @@ app.UseFilter<TimerFilter>();
 //-----------------------
 // TODO: Add commands here
 //  Rename the command first
-app.Add<MyCommand>();
+app.Add<MyBasicCommand>();
 
 app.Run(args);
 // NOTE: Hosted applications will be disposed after Run();

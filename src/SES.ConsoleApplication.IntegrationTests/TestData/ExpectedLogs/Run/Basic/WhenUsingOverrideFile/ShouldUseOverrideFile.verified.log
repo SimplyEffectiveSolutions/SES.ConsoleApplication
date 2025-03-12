@@ -1,0 +1,12 @@
+2025-03-12 23:20:09.265 [INF]: (Command: run): Starting...
+2025-03-12 23:20:09.269 [TRC]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a trace message
+2025-03-12 23:20:09.269 [DBG]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a debug message
+2025-03-12 23:20:09.269 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging an information message
+2025-03-12 23:20:09.269 [WRN]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a warning message
+2025-03-12 23:20:09.269 [ERR]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging an error message
+2025-03-12 23:20:09.269 [CRI]: (SES.ConsoleApplication.Commands.MyBasicCommand => Logging Levels): Logging a critical message
+2025-03-12 23:20:09.269 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Message: TestMessage
+2025-03-12 23:20:09.273 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Title: OverrideTitle
+2025-03-12 23:20:09.273 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Name: DefaultName
+2025-03-12 23:20:09.274 [INF]: (SES.ConsoleApplication.Commands.MyBasicCommand => Args and config values): Key: 
+2025-03-12 23:20:09.274 [INF]: (Command: run): Finished successfully, Elapsed: 00:00:00.0129048

@@ -8,14 +8,14 @@ using System.Collections.Generic;
 
 namespace SES.ConsoleApplication.UnitTests.Commands;
 
-public class MyCommandTests
+public class MyBasicCommandTests
 {
-    private readonly Mock<ILogger<MyCommand>> _loggerMock;
-    private readonly IOptions<PositionOptions> _options;
+    private readonly Mock<ILogger<MyBasicCommand>> _loggerMock;
+    private readonly IOptions<BasicOptions> _options;
     private readonly IConfiguration _configuration;
-    private readonly MyCommand _command;
+    private readonly MyBasicCommand _basicCommand;
 
-    public MyCommandTests()
+    public MyBasicCommandTests()
     {
         // Setup configuration
         var inMemorySettings = new Dictionary<string, string> {
@@ -28,17 +28,17 @@ public class MyCommandTests
             .Build();
 
         // Setup real options using Microsoft.Extensions.Options.Options.Create
-        _options = Microsoft.Extensions.Options.Options.Create(new PositionOptions
+        _options = Microsoft.Extensions.Options.Options.Create(new BasicOptions
         {
             Title = "Test Title",
             Name = "Test Name"
         });
 
         // Setup logger
-        _loggerMock = new Mock<ILogger<MyCommand>>();
+        _loggerMock = new Mock<ILogger<MyBasicCommand>>();
 
         // Create command instance
-        _command = new MyCommand(_configuration, _options, _loggerMock.Object);
+        _basicCommand = new MyBasicCommand(_configuration, _options, _loggerMock.Object);
     }
 
     [Fact]
@@ -49,11 +49,11 @@ public class MyCommandTests
         var key = "Test Key";
 
         // Act - This should access the options value
-        _command.Echo(msg, key);
+        _basicCommand.Run(msg, key);
 
         // Assert - This test is primarily checking that the method executes without exceptions
         // We're using ZLogger which doesn't easily allow for verification
-        Assert.NotNull(_command);
+        Assert.NotNull(_basicCommand);
     }
 
     [Fact]
@@ -63,9 +63,9 @@ public class MyCommandTests
         var msg = "Test Message";
 
         // Act - This should access the options value
-        _command.Echo(msg);
+        _basicCommand.Run(msg);
 
         // Assert - This test is primarily checking that the method executes without exceptions
-        Assert.NotNull(_command);
+        Assert.NotNull(_basicCommand);
     }
 }

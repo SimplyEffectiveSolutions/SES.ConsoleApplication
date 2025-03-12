@@ -25,6 +25,7 @@ TestData/
 │   └── [CommandName]/
 │       └── [FixtureName]/
 │           └── [TestName]/
+│               └── _EXE/          # Special folder - contents copied to executable directory
 ├── ExpectedLogs/                  # Expected command outputs (logs)
 │   └── [CommandName]/
 │       └── [FixtureName]/
@@ -52,6 +53,14 @@ The `ExpectedLogs` folder contains the expected console output logs for each tes
 ### ExpectedResults
 
 The `ExpectedResults` folder contains the expected file states after a command has been executed, organised by command name, fixture name, scenario name, and test name.
+
+### Special _EXE Folder
+
+A special folder named `_EXE` can be included in any test data directory. The contents of this folder will be copied directly to the executable directory (where SES.ConsoleApplication.dll is located), rather than to the destination test directory. This is useful for:
+
+- Configuration files that need to be in the same directory as the executable
+- Override files that should be loaded from the executable directory
+- Any files that the application expects to find in its own directory
 
 ## Test Naming Convention
 

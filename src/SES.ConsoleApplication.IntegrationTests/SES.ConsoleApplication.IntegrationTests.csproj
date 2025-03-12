@@ -32,11 +32,4 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="TestData\ExpectedLogs\Echo\Basic\WhenUsingCommandLineAndOverride\" />
-    <Folder Include="TestData\ExpectedLogs\Echo\Basic\WhenUsingCommandLine\" />
-    <Folder Include="TestData\ExpectedLogs\Echo\Basic\WhenUsingDefaultConfig\" />
-    <Folder Include="TestData\ExpectedLogs\Echo\Basic\WhenUsingOverrideFile\" />
-  </ItemGroup>
-
 </Project>

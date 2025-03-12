@@ -9,11 +9,10 @@ namespace SES.ConsoleApplication.IntegrationTests.Commands;
 /// These tests ensure that command-line parameters override configuration from files.
 /// </summary>
 [Collection("Basic Collection")]
-public class ConfigurationIntegrationTests : BaseCommandTest
+public class MyBasicCommandIntegrationTests : BaseCommandTest
 {
-    public ConfigurationIntegrationTests(ITestOutputHelper output) : base(output)
+    public MyBasicCommandIntegrationTests(ITestOutputHelper output) : base(output)
     {
-        CommandName = "echo";
     }
 
     /// <summary>
@@ -21,13 +20,13 @@ public class ConfigurationIntegrationTests : BaseCommandTest
     /// when no overrides are specified.
     /// </summary>
     [Fact]
-    public void Echo_Basic_WhenUsingDefaultConfig_ShouldUseBaseConfig()
+    public void Run_Basic_WhenUsingDefaultConfig_ShouldUseBaseConfig()
     {
         // Arrange - Copy the basic fixture data which contains appsettings.json
         CopyFixtureDataDirectoryToTestDirectory();
 
         // Act - Run the echo command with a simple message
-        var output = RunCommand("echo", new Dictionary<string, string>
+        var output = RunCommand("run", new Dictionary<string, string>
         {
             { "-m", "TestMessage" }
         });
@@ -41,14 +40,14 @@ public class ConfigurationIntegrationTests : BaseCommandTest
     /// specified with the --config parameter.
     /// </summary>
     [Fact]
-    public void Echo_Basic_WhenUsingOverrideFile_ShouldUseOverrideFile()
+    public void Run_Basic_WhenUsingOverrideFile_ShouldUseOverrideFile()
     {
         // Arrange
         CopyFixtureDataDirectoryToTestDirectory();
         CopyCommandDataDirectoryToTestDirectory();
 
         // Act - Run echo command with config override
-        var output = RunCommand("echo", new Dictionary<string, string>
+        var output = RunCommand("run", new Dictionary<string, string>
         {
             { "-m", "TestMessage" },
             { "--config", "override.json" }
@@ -62,13 +61,13 @@ public class ConfigurationIntegrationTests : BaseCommandTest
     /// Verifies that command-line parameters override configuration from files.
     /// </summary>
     [Fact]
-    public void Echo_Basic_WhenUsingCommandLine_ShouldUseCommandLine()
+    public void Run_Basic_WhenUsingCommandLine_ShouldUseCommandLine()
     {
         // Arrange
         CopyFixtureDataDirectoryToTestDirectory();
 
         // Act - Run echo command with command line key override
-        var output = RunCommand("echo", new Dictionary<string, string>
+        var output = RunCommand("run", new Dictionary<string, string>
         {
             { "-m", "TestMessage" },
             { "-k", "CommandLineKey" }
@@ -83,14 +82,14 @@ public class ConfigurationIntegrationTests : BaseCommandTest
     /// base configuration and override files.
     /// </summary>
     [Fact]
-    public void Echo_Basic_WhenUsingCommandLineAndOverride_ShouldUseCommandLineAndOverride()
+    public void Run_Basic_WhenUsingCommandLineAndOverride_ShouldUseCommandLineAndOverride()
     {
         // Arrange
         CopyFixtureDataDirectoryToTestDirectory();
         CopyCommandDataDirectoryToTestDirectory();
 
         // Act - Run with both override file and command line parameters
-        var output = RunCommand("echo", new Dictionary<string, string>
+        var output = RunCommand("run", new Dictionary<string, string>
         {
             { "-m", "TestMessage" },
             { "-k", "CommandLineKey" },

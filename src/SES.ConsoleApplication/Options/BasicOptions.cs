@@ -1,8 +1,7 @@
 ﻿namespace SES.ConsoleApplication.Options;
 
-public class PositionOptions
+public class BasicOptions
 {
     public string Title { get; set; } = "";
     public string Name { get; set; } = "";
-    public int Height { get; set; }
 }

@@ -9,15 +9,15 @@ namespace SES.ConsoleApplication.Commands;
 
 // TODO: Rename class, method and parameters
 //  Possibly leave the config parameter for all commands
-public class MyCommand(IConfiguration configuration, IOptions<PositionOptions> options, ILogger<MyCommand> logger)
+public class MyBasicCommand(IConfiguration configuration, IOptions<BasicOptions> options, ILogger<MyBasicCommand> logger)
 {
-    /// <summary>Print a message to screen.</summary>
+    /// <summary>Run command. Print a message to screen.</summary>
     /// <param name="msg">-m, The message.</param>
     /// <param name="key">-k, Key value.</param>
     /// <param name="config">-c, Config file path. The utility will look for a appsettings.json file in the EXE folder by default. You can however override the default settings with your own.</param>
-    public void Echo(string msg, string key = "", string config = "")
+    public void Run(string msg, string key = "", string config = "")
     {
-        using (logger.BeginScope("Scope1"))
+        using (logger.BeginScope("Logging Levels"))
         {
             logger.ZLogTrace($"Logging a trace message");
             logger.ZLogDebug($"Logging a debug message");
@@ -27,8 +27,10 @@ public class MyCommand(IConfiguration configuration, IOptions<PositionOptions> o
             logger.ZLogCritical($"Logging a critical message");
         }
 
-        logger.BeginScope("Scope2");
-        logger.ZLogInformation($"Message: {msg}. Title: {options.Value.Title}, Name: {options.Value.Name}, Key: {key}");
-        logger.ZLogInformation($"Using ConsoleApp.Log() to log this message.");
+        logger.BeginScope("Args and config values");
+        logger.ZLogInformation($"Message: {msg}");
+        logger.ZLogInformation($"Title: {options.Value.Title}");
+        logger.ZLogInformation($"Name: {options.Value.Name}");
+        logger.ZLogInformation($"Key: {key}");
     }
 }

@@ -39,7 +39,6 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-!*.verified.log
 
 # Misc
 tools/FAKE/
@@ -106,6 +105,7 @@ StyleCopReport.xml
 *.tmp_proj
 *_wpftmp.csproj
 *.log
+!*.verified.log
 *.tlog
 *.vspscc
 *.vssscc
