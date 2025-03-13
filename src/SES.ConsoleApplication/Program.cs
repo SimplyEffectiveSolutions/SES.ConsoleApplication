@@ -18,7 +18,6 @@ var app = Startup.CreateNonHostedConsoleAppBuilder(args);
 //-----------------------
 // TODO: Add filters here
 //  Filters can be added to a specific class or method
-// app.UseFilter<ReplaceLogFilter>(); // neuecc recommends not using ConsoleApp.Log in standard applications
 app.UseFilter<TimerFilter>();
 
 //-----------------------

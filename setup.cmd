@@ -7,6 +7,7 @@ REM Create standard project directories
 mkdir doc
 mkdir doc\assets
 mkdir img
+mkdir requirements
 
 REM Get current project name (folder name)
 for %%I in (.) do set PROJECT_NAME=%%~nxI

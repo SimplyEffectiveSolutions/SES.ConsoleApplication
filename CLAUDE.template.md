@@ -1,5 +1,11 @@
 # Project Development Guidelines
 
+## Worflow
+
+- Read the "requirements" folder to see if there are any tasks
+- Summarize the task
+- Explain how you will complete the task and how you will break down into smaller tasks if necessary before writing any code
+
 ## Development Guidelines
 
 ### Code Style Guidelines
