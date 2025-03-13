@@ -77,6 +77,23 @@ Run the `publish.cmd` command.
 
 If you want to change the exe name, update the `publish.cmd` file with: `-p:AssemblyName=YourDesiredExeName` e.g. `dotnet publish -c Release -p:AssemblyName=YourDesiredExeName`
 
+# Utility Scripts
+
+The project includes several utility CMD scripts in the root directory to simplify common tasks:
+
+| Script | Description |
+|--------|-------------|
+| `setup.cmd` | Initializes a new project after template creation. Creates git repository and necessary directory structure. Automatically executed as a post-action when creating a new project from the template. |
+| `publish.cmd` | Publishes the application as a self-contained executable. Use this to create a distributable version of your application. |
+| `create_template.cmd` | Utility for template developers to update or regenerate template files. |
+| `consolidate_readmes.cmd` | Collects all README.md and README.txt files from the entire project into a single READMES directory. Useful for documentation overview and review. READMES folder is excluded from git |
+
+## Using the Scripts
+
+- **Publishing your application**: Run `publish.cmd` to create a self-contained executable
+- **Consolidating documentation**: Run `consolidate_readmes.cmd` to collect all README files into the READMES directory
+- **After creating a new project**: `setup.cmd` runs automatically, but can be re-run if needed
+
 # References
 
 - Really good information on logging here (with configuration): https://learn.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line

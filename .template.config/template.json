@@ -30,7 +30,9 @@
         "CLAUDE.md",
         "README.md",
         "TIMELINE.md",
-        "create_template.cmd"
+        "create_template.cmd",
+        "**/TestData/**",
+        "READMES/"
       ],
       "rename": {
         "CLAUDE.template.md": "CLAUDE.md",
@@ -41,6 +43,14 @@
       }
     }
   ],
+  "symbols": {
+    "UseHosted": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "true",
+      "description": "Use hosted (true) or non-hosted (false) application mode"
+    }
+  },
   "postActions": [
     {
       "actionId": "3A7C4B45-1F5D-4A30-959A-51B88E82B5D2",
