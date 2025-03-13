@@ -32,24 +32,21 @@
 ### Git Workflow
 
 - **IMPORTANT:** Never commit changes automatically without explicit approval from the user
-- Always run all tests before committing any changes (`dotnet test`)
-- Never commit code that breaks existing tests
-- Wait for explicit confirmation before creating a commit
-- Pull requests should only be created after review of all changes
+- **CRITICAL:** Always run all tests before committing any changes (`dotnet test`) and verify they PASS
+- **CRITICAL:** Never EVER commit code that breaks existing tests - this is a blocker that must be fixed first
+- **IMPORTANT:** Never commit changes automatically without explicit approval from the user
 - **IMPORTANT:** Always explicitly ask whether feature branches should be merged with `--no-ff` (to preserve branch history) or with fast-forward (for linear history)
 - Default to `--no-ff` for feature branches to make it clearer what was worked on in each feature
 
 ## Code Architecture
 
-The codebase implements a layered architecture with a clear inheritance hierarchy to maximize code reuse and minimize duplication.
-Prefer loosely coupled code that is easy to test, read and maintain.
+- The codebase implements a layered architecture with a clear inheritance hierarchy to maximize code reuse and minimize duplication.
+- **IMPORTANT:** Prefer loosely coupled code that is easy to test, read and maintain.
 
 ## Instructions
 
 ### File Handling
 
-- Use Windows line endings (CRLF) on all source code files
-- When comparing file content in tests, normalize line endings (convert CRLF to LF) to ensure cross-platform compatibility
 - Always use Path.Combine() for path construction rather than string concatenation with hardcoded separators
 - Use relative paths in configuration files whenever possible to improve cross-platform compatibility
 - Prefer using System.IO methods over platform-specific file manipulation libraries when working across platforms
@@ -106,14 +103,8 @@ This structure allows for:
 
 When writing tests that involve file operations, follow these guidelines:
 
-1. **Line Ending Normalization**: Always normalize line endings (CRLF to LF) when comparing file content
-   ```csharp
-   string normalized1 = content1.Replace("\r\n", "\n");
-   string normalized2 = content2.Replace("\r\n", "\n");
-   Assert.Equal(normalized1, normalized2);
-   ```
 
-2. **Path Construction**: Use `Path.Combine()` rather than hardcoded separators
+1. **Path Construction**: Use `Path.Combine()` rather than hardcoded separators
    ```csharp
    // Good
    var path = Path.Combine(baseDir, "subfolder", "file.txt");
@@ -123,9 +114,9 @@ When writing tests that involve file operations, follow these guidelines:
    var path = baseDir + "\\subfolder\\file.txt";
    ```
 
-3. **Configuration Paths**: Use relative paths in test configuration files
+2. **Configuration Paths**: Use relative paths in test configuration files
 
-4. **File Operations**: Use platform-agnostic file operations
+3. **File Operations**: Use platform-agnostic file operations
 
 ### Test Naming Convention
 

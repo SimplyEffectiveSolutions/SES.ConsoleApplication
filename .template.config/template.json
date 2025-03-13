@@ -32,7 +32,7 @@
         "TIMELINE.md",
         "create_template.cmd",
         "**/TestData/**",
-        "READMES/"
+        "**/READMES/**"
       ],
       "rename": {
         "CLAUDE.template.md": "CLAUDE.md",
