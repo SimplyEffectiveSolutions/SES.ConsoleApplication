@@ -30,4 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\SES.ConsoleApplication\SES.ConsoleApplication.csproj"/>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

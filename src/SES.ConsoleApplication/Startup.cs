@@ -100,6 +100,8 @@ public static class Startup
         }
     }
 
+#if (UseHosted)
+
     internal static ConsoleApp.ConsoleAppBuilder CreateHostedConsoleAppBuilder(string[] args)
     {
         // Check to see if the --config parameter has been set
@@ -156,6 +158,8 @@ public static class Startup
         var app = builder.ToConsoleAppBuilder();
         return app;
     }
+
+#else
 
     internal static ConsoleApp.ConsoleAppBuilder CreateNonHostedConsoleAppBuilder(string[] args)
     {
@@ -223,6 +227,8 @@ public static class Startup
 
         return app;
     }
+
+#endif
 
     private static void ConfigureFormatter(PlainTextZLoggerFormatter formatter, bool areScopesIncluded)
     {

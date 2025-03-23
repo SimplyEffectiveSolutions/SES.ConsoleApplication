@@ -29,6 +29,7 @@
         "SES.ConsoleApplication.sln.DotSettings.user",
         "CLAUDE.md",
         "README.md",
+		"REGISTER.md",
         "TIMELINE.md",
         "create_template.cmd",
         "**/TestData/**",
