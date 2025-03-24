@@ -1,0 +1,1 @@
+dotnet format SES.Linter.sln analyzers --verify-no-changes --report analyzer_report.json

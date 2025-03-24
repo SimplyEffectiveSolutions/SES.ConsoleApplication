@@ -154,6 +154,10 @@ public static class Startup
         //-------------------
         // TODO: Add options
         builder.Services.Configure<BasicOptions>(builder.Configuration.GetSection("Basic"));
+		
+		//-------------------
+        // TODO: Register services
+		// builder.Services.AddSingleton<MyService>();
 
         var app = builder.ToConsoleAppBuilder();
         return app;
@@ -198,6 +202,9 @@ public static class Startup
                     // TODO: Add options here
                     services.Configure<BasicOptions>(configuration.GetSection("Basic"));
 
+
+					//-----------------------
+                    // TODO: Add services here
                     services.AddSingleton(configuration);
                 }
             )

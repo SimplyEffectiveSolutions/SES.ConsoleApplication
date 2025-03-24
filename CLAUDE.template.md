@@ -10,6 +10,7 @@ Table of Contents:
 - Summarize the requirements
 - Explain, step by step, how you will complete the requirements before writing any code
 - Once approved write the step by step plan in a work_to_list.md file
+- As you work through the tasks, update the work_to_list.md file
 
 ## Development Guidelines
 
@@ -56,6 +57,7 @@ Table of Contents:
 - Only create input files in TestData/Fixtures/ and TestData/Commands/ folders
 - Let the test framework automatically generate .unverified files during the first test run
 - Understand that the developer will manually verify and rename .unverified to .verified files
+- **IMPORTANT:** When implementing a new feature, start with only one integration test (the most basic scenario) for initial review before adding more test cases
 
 ### Git Workflow
 

@@ -129,6 +129,9 @@ dotnet_diagnostic.SA1025.severity = none
 dotnet_diagnostic.SA1026.severity = none
 dotnet_diagnostic.SA1027.severity = none
 dotnet_diagnostic.SA1028.severity = none
+
+#Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
 dotnet_diagnostic.SA1102.severity = none
 dotnet_diagnostic.SA1103.severity = none
 dotnet_diagnostic.SA1104.severity = none
