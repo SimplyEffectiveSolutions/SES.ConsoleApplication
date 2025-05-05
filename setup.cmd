@@ -4,10 +4,13 @@ REM Initialize git repository
 git init
 
 REM Create standard project directories
-mkdir doc
-mkdir doc\assets
-mkdir img
+mkdir docs
+mkdir docs\user
+mkdir docs\dev
+mkdir docs\ai
+mkdir imgs
 mkdir requirements
+mkdir requirements_implemented
 
 REM Get current project name (folder name)
 for %%I in (.) do set PROJECT_NAME=%%~nxI

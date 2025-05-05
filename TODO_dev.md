@@ -1,0 +1,6 @@
+- [ ] Consolidate the SES.ConsoleApplication files across all applicstion (SES.Linter, SES.DocFlow.Utilities, etc...)
+	- [ ] gitignore
+	- [ ] CLAUDE.md
+	- [ ] Base classes
+	- [ ] etc..
+	- [ ] Create a script to check all these files (copy and move them to temp folder)
