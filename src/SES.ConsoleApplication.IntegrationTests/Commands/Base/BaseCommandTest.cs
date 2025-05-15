@@ -244,7 +244,7 @@ public abstract class BaseCommandTest
             var fixtureName = parts[1];
 
             // Extract the test name
-            if (parts.Length >= 4 && parts[2].StartsWith("When"))
+            if (parts.Length == 4)
             {
                 // Command_Fixture_Scenario_Test format
                 var scenarioName = parts[2];
