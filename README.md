@@ -4,9 +4,9 @@ To see the help message outputed by the command line, run: `dotnet run --project
 # Settings
 
 - Make sure 'appsettings.json' file is set to "Copy to output directory"
-  - It wil end up in the same directory as the exe
+  - It will end up in the same directory as the exe
 - To set the environment value at the command line, use this command:
-  - `dotnet run --environment Production` // Other values are Stating, Development
+  - `dotnet run --environment Production` // Other values are Staging, Development
 
 # Notes
 

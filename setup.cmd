@@ -6,11 +6,13 @@ git init
 REM Create standard project directories
 mkdir docs
 mkdir docs\user
-mkdir docs\dev
-mkdir docs\ai
-mkdir imgs
 mkdir requirements
-mkdir requirements_implemented
+mkdir prompting
+
+REM Symbolic links
+mklink /D .\prompting\docs E:\Source\SES.Prompting\docs
+mklink /D .\prompting\scripts E:\Source\SES.Prompting\src\scripts
+mklink /D .\prompting\templates E:\Source\SES.Prompting\src\templates
 
 REM Get current project name (folder name)
 for %%I in (.) do set PROJECT_NAME=%%~nxI

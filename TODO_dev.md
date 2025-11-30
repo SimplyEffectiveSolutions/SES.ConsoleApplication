@@ -1,4 +1,4 @@
-- [ ] Consolidate the SES.ConsoleApplication files across all applicstion (SES.Linter, SES.DocFlow.Utilities, etc...)
+- [ ] Consolidate the SES.ConsoleApplication files across all application (SES.Linter, SES.DocFlow.Utilities, etc...)
 	- [ ] gitignore
 	- [ ] CLAUDE.md
 	- [ ] Base classes

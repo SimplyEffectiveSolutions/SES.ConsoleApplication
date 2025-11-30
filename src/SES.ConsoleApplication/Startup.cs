@@ -31,7 +31,7 @@ public static class Startup
 
         var s = string.Empty;
 
-        if (idx > -1)
+        if (configIndex > -1)
         {
             // Get the value associated with --config key
             s = strings[configIndex + 1];
