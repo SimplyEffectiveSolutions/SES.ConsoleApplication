@@ -3,9 +3,10 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 # Settings
 
+- Project template settings are found in the .template.config folder
 - Make sure 'appsettings.json' file is set to "Copy to output directory"
   - It will end up in the same directory as the exe
-- To set the environment value at the command line, use this command:
+- To set the environment value at the command line, use:
   - `dotnet run --environment Production` // Other values are Staging, Development
 - TODO: Setup launchSettings.json
 	- `dotnet run --launch-pofile <NAME>` or use `-lp`
@@ -23,7 +24,7 @@ In the directory that contains the .template.config folder, run:
 
 `dotnet new install .` or `dotnet new install . --force` (If the template already exists)
 
-To use the installed template, you can then run:
+To use the installed template to create a new project, you can then run:
 
 `dotnet new sesconsole` in a new folder. The name of the folder will dictate the project name. Or use `dotnet new sesconsole -n <project name>` to specify the project name
 
