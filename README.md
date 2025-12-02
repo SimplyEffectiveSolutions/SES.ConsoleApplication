@@ -7,6 +7,9 @@ To see the help message outputed by the command line, run: `dotnet run --project
   - It will end up in the same directory as the exe
 - To set the environment value at the command line, use this command:
   - `dotnet run --environment Production` // Other values are Staging, Development
+- TODO: Setup launchSettings.json
+	- `dotnet run --launch-pofile <NAME>` or use `-lp`
+	- This file located in the project Properties folder
 
 # Notes
 
