@@ -36,7 +36,6 @@
         "**/READMES/**"
       ],
       "rename": {
-        "CLAUDE.template.md": "CLAUDE.md",
         "README.template.md": "README.md",
         "TODO.template.md": "TODO.md",
         "appsettings.tmp": "appsettings.json",
