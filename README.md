@@ -3,8 +3,8 @@ To see the help message outputed by the command line, run: `dotnet run --project
 
 # Settings
 
-- Project template settings are found in the .template.config folder
-- Make sure 'appsettings.json' file is set to "Copy to output directory"
+- Project template settings are found in the `.template.config` folder
+- Make sure `appsettings.json` file is set to "Copy to output directory"
   - It will end up in the same directory as the exe
 - To set the environment value at the command line, use:
   - `dotnet run --environment Production` // Other values are Staging, Development
